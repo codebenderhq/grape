@@ -1,6 +1,6 @@
 {
     "tasks": {
-        "dev": "deno task bundle & export LOCAL=./src/_server && export LOCAL_BUILD=. && deno run --watch -A ./backpack/index.js ",
+        "dev": "deno task bundle & export LOCAL=./src/_server && export LOCAL_BUILD=. && deno run --watch  --unsafely-ignore-certificate-errors -A ./backpack/index.js ",
         "run": " export LOCAL=./src/_server && export LOCAL_BUILD=. && deno run --watch -A ./backpack/index.js build",
         "test": " deno task build && deno test ./qa --allow-run  --allow-net --allow-env --allow-read --import-map ./src/import_map.json ",
         "bundle": "deno bundle --watch ./src/_server/index.js ./backpack/server.js && cd backpack && zip -r ../binary.zip .",

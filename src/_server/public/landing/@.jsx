@@ -8,8 +8,8 @@ export function App() {
           <title>Hello from JSX</title>
           <link rel="stylesheet" href="output.css"/>
         </head>
-        <body className="w-screen h-screen bg-black">
-          <h1 class="text-7xl">Should have done this last time now to test it later</h1>
+        <body class="w-screen h-screen bg-black">
+          <h1 class="text-7xl text-white">Should have done this last time now to test it later</h1>
         </body>
       </html>
     );

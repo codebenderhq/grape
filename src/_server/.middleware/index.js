@@ -32,9 +32,8 @@ const middleware = async (request, info) => {
       const domain = request.headers.get('host').split(':')[0];
       const localDev = Deno.env.get('LOCAL')
       const serverSrc = Deno.env.get('REMOTE');
-      const sitemapSrc = localDev ? localDev : domain === Deno.env.get('QA_ENV_DOMAIN')  ? `${serverSrc}/d/${pathname}` :  `${serverSrc}/p/${domain}`;
-      const sitemap = await import(`.${sitemapSrc}/sitemap.json`,{ assert: { type: "json" } });
-      
+      const appSrc = localDev ? localDev : domain === Deno.env.get('QA_ENV_DOMAIN')  ? `${serverSrc}/d/${pathname}` :  `${serverSrc}/p/${domain}`;
+
       const isFormType = request.headers.get("content-type") === 'application/x-www-form-urlencoded' 
       const isApiCall =  pathname.includes('api') || request.headers.get("host").includes('api')
       const isFileRequest = pathname.includes('.')
@@ -62,17 +61,16 @@ const middleware = async (request, info) => {
       // figure out how to access sec-fetch-dest
       const path = pathname.split('.').shift()
  
-      return script_middleware(sitemap.default,path,request)
+      return script_middleware(path,request)
       }
       else if(isFileRequest){
-        console.log(sitemapSrc)
-          return assets_middleware(pathname,request,sitemapSrc)
+          return assets_middleware(pathname,request,appSrc)
       }
 
       if (isApiCall || isFormType ) {
-        return api_middleware(sitemap.default,pathname,request)
+        return api_middleware(pathname,request)
       } else {
-        return  html_middleware(sitemap.default,pathname,request)
+        return  html_middleware(pathname,request)
       }
     } catch (err) {
         // look into support for logging service or build own
