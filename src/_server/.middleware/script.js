@@ -1,24 +1,22 @@
-const script_middleware  = async (sitemap, pathname, req) => {
-  
-
-    const referer = req.headers.get('referer')
-    const activeSite = sitemap[pathname];
-    const res = activeSite ? activeSite : sitemap['/error']
-    let prop = JSON.parse(res.onBuildResult)
-
-    if(res.onServer){
-
-      const param = referer.split('/').pop()
-      const serverProps = {param}
-      // update to use new Function
-      // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions
-      const serverSideScript = eval(`(${res.onServer})(${JSON.stringify(serverProps)})`)
-       
-      prop = {...prop, onServerResult:await serverSideScript}
-    }
+const script_middleware  = async (pathname, req) => {
+   
+  let onBuildResult;
+  let onServerResult;
+  let prop
+  const res =  await import(`../../../src/_app/${pathname}.js`)
  
-    return new Response(`(${res.script})(${JSON.stringify(prop)})`, {
-      headers: {
+  if(res.onBuild){
+    onBuildResult = await res.onBuild()
+  }
+
+  if(res.onServer){
+     onServerResult = await res.onServer(pathname, req)
+  }
+
+  prop = {onBuildResult, onServerResult}
+  
+  return new Response(`(${res.default})(${JSON.stringify(prop)})`, {
+        headers: {
         "content-type": "text/javascript",
       },
     });

@@ -45,20 +45,6 @@ const middleware = async (request, info) => {
 
 
       if(isScriptRequest){
-          // Headers {
-      //   accept: "*/*",
-      //   "accept-encoding": "gzip, deflate, br",
-      //   "accept-language": "en-US,en;q=0.5",
-      //   connection: "keep-alive",
-      //   dnt: "1",
-      //   host: "localhost:8080",
-      //   referer: "http://localhost:8080/test",
-      //   "sec-fetch-dest": "script",
-      //   "sec-fetch-mode": "cors",
-      //   "sec-fetch-site": "same-origin",
-      //   "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:106.0) Gecko/20100101 Firefox/106.0"
-      // }
-      // figure out how to access sec-fetch-dest
       const path = pathname.split('.').shift()
  
       return script_middleware(path,request)
