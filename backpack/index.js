@@ -368,7 +368,7 @@ const tailwindInit = async () => {
 }
 
 const tailwindRun = (isBuild) => {
-    const styleCMD = `./tailwindcss -i ./src/input.css -o ./src/_server/assets/output.css  ${isBuild ? '--minify': '--watch' }`.split(' ')
+    const styleCMD = `./tailwindcss -i ./src/input.css -o ./src/assets/output.css  ${isBuild ? '--minify': '--watch' }`.split(' ')
     const styleProcess = Deno.run({
         cmd:styleCMD,
         stdout: "piped",
@@ -380,9 +380,7 @@ const devServe = async () => {
     try{
         await tailwindInit()
         tailwindRun()
-        await assetManagement()
         console.log('Happy Developing')
-        await devRun()
  
     }catch(err){
         console.log('err',err)
@@ -410,8 +408,7 @@ const prodServe = async () => {
 
 
 if (import.meta.main) {
-
-    serve(server, { port });
+ 
     if(Deno.args.length > 0)
     {
       switch ( Deno.args[0]) {
