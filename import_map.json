@@ -1,8 +1,6 @@
 {
     "imports": { 
-      "@parcel/config-default": "npm:@parcel/config-default",
-      "@parcel/core": "npm:@parcel/core",
-      "acorn-node": "npm:acorn-node"
+ 
     }
   }
 

@@ -38,7 +38,7 @@ const tailwindRun = async (isBuild) => {
     const rawError = await styleProcess.stderrOutput();
     
     if (code === 0) {
-        console.log('generated styles')
+        console.log('styles generated')
     } else {
         const errorString = new TextDecoder().decode(rawError);
         console.log(errorString);
@@ -58,7 +58,6 @@ const devServe = async () => {
 
 
 }
-
 
 const prodServe = async () => {
 

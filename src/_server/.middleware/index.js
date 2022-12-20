@@ -2,9 +2,7 @@ import html_middleware from "./html.js";
 import assets_middleware from './asset.js';
 import script_middleware from "./script.js";
 import api_middleware from "./api.js";
-import websocket_middleware from "./websocket.js";
-// import * as availibleServices from 'https://sauveur.xyz/api/blacklabel/services'
-// import * as envVariables from 'https://sauveur.xyz/api/blacklabel/env-set' assert { type: 'json' };
+
 
 
 // a rudimentary deomin specifier
@@ -39,11 +37,7 @@ const middleware = async (request, info) => {
       const isFileRequest = pathname.includes('.')
       const isScriptRequest = pathname.includes('.js')
 
-      if (pathname == '/socket') {
-        return await websocket_middleware(pathname, request)
-      }
-
-
+      
       if(isScriptRequest){
       const path = pathname.split('.').shift()
  
