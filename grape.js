@@ -1,6 +1,25 @@
  
 const uri = 'https://sauveur.xyz/api/blacklabel/cli'
  
+const cmdRun = async(command,msg) => {
+    const cmd = command.split(' ')
+    const p = Deno.run({
+        cmd,
+        stderr: "piped",
+    })
+
+    const {code} =  await p.status 
+    // const rawOutput = await p.output();
+    const rawError = await p.stderrOutput();
+    console.log(msg)
+
+    if (code === 0) {
+        // await Deno.stdout.write(rawOutput);
+    } else {
+        const errorString = new TextDecoder().decode(rawError);
+        console.log(errorString);
+    }
+}
 const upgrade = async () => {
 
     const code = await commands(['deno','cache','--reload', uri])
@@ -72,14 +91,55 @@ const prodServe = async () => {
 
 }
 
+const new_project = async () => {
+    const frame_installer = 'curl -sLO https://github.com/codebenderhq/backpack/releases/latest/download/binary.zip'
+    const unzip_installer = 'unzip binary.zip'
+
+    await cmdRun(frame_installer,'FRAME installed')
+    await cmdRun(unzip_installer,'FRAME ready to be used')
+}
+
+const deno_task = async (arg) => { 
+    const deno_option = `deno task ${arg}`
+    await cmdRun(deno_option,'')
+}
+
+const generate = async (args) => {
+
+    const type = args[1]
+    const name = args[2]
+    const other = args[3]
+
+
+    if(type ==='page'){
+        console.log(`generating ${name} page`)
+    }
+
+    if(type === 'service'){
+        console.log(`generating ${name} service for the ${other ? other : 'index'} page`)
+    }
+
+    if(type === 'api'){
+        console.log(`generating ${name} api and ${other} method`)
+    }
+}
 
 if (import.meta.main) {
  
-    if(Deno.args.length > 0)
+    const args = Deno.args
+  
+    if(args.length > 0)
     {
-      switch ( Deno.args[0]) {
+      switch (args[0]) {
+        case "new":
+            await new_project()
+            break;
+        case "create":
+            await generate(args)
+            break;
         case "tw":
             await devServe()
+            break;
         case "build":
             await prodServe()
             break;
@@ -90,10 +150,11 @@ if (import.meta.main) {
            upgrade()
           break;
         default:
+            deno_task(args[0])
           break;
       }
     }else{
-
+        console.log('Welcome to grape');
         // console.log(instances)
     }
   }
