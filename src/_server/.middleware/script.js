@@ -3,7 +3,8 @@ const script_middleware  = async (pathname, req) => {
   let onBuildResult;
   let onServerResult;
   let prop
-  const res =  await import(`../../../src/_app/${pathname}.js`)
+
+  const res =  await import(`${Deno.cwd()}/src/_app/${pathname}.js`)
  
   if(res.onBuild){
     onBuildResult = await res.onBuild()
