@@ -2,19 +2,6 @@
 //  import { log } from "../../sdk/utils/index.js";
 
 
-// const addCorsIfNeeded = (response) => {
-//   const headers = new Headers(response.headers);
-
-//   if (!headers.has("access-control-allow-origin")) {
-//     headers.set("access-control-allow-origin", "*");
-//   }
-
-//   return headers;
-// };
-
- 
-
-// a rudimentary domain specifier
 const set_domain = (request) => {
 
 
@@ -50,14 +37,21 @@ const handler = (value) => {
   return new Function(value)
 }
 
-const api_middleware =  async (sitemap, pathname, request) => {
+const api_middleware =  async (pathname, request) => {
   let response;
   try {
     const auth = request.headers.get("authorization");
     
     const referer = request.headers.get("referer");
- 
-
+    const paths = pathname.split('/')
+    let subPath=''
+    if(paths.length > 3){
+      paths.pop()
+    }
+  
+   
+    const apiPath = `${paths.reverse().join('/')}${subPath}`
+  
     // added server cors
  
     if(!is_authenticated(auth) && !valid_domain(request.headers.get("referer")) && !referer){
@@ -73,14 +67,13 @@ const api_middleware =  async (sitemap, pathname, request) => {
     //need to add support for being able to handle the base path
     // const corsHeaders = addCorsIfNeeded(new Response());
 
+    // create a way to get different kinds of data 
+    // application/octet-stream
+
     if (request.method === "GET") {
-      const func = handler(`
-      const request = ${JSON.stringify({
-        method: request.method
-      })}
-      ${sitemap[pathname]}`)
- 
-      const json =  await func()
+   
+      const {default: apiGet} = await import(`../../_app/${apiPath}/get.js`)
+      const json = await apiGet(request)
  
       response = Response.json(json,{
         status: json.status
@@ -88,13 +81,7 @@ const api_middleware =  async (sitemap, pathname, request) => {
   
     } else if (request.method === "POST") {
       let data ={};
-      // if (request.headers.get("domain") === "test"){
-      // create a test path, to make sure test data does not effect live data
-      //   data = await request.json()
-      // }else{
-      //   const _data = await request.arrayBuffer();
-      //   data = await decryptMessage(_data);
-      // } 
+ 
       if (isFormReq && referer) {
         let referer = new URL(request.headers.get("referer"));
         let _data = new URLSearchParams(await request.text());
@@ -118,14 +105,9 @@ const api_middleware =  async (sitemap, pathname, request) => {
         data = await request.json();
       }
 
-      const func = handler(`
-      const request = ${JSON.stringify({
-        method: request.method
-      })}
-      const body = ${JSON.stringify(data)}
-      ${sitemap[pathname]}`)
+      const {default: apiPost} = await import(`../../_app/${apiPath}/post.js`)
 
-      const json = await func()
+      const json = await apiPost(request,data)
  
 
       //CTA work in progress
@@ -156,14 +138,10 @@ const api_middleware =  async (sitemap, pathname, request) => {
 
     } else if (request.method == "PUT") {
       let data = await request.blob();
-      const func = handler(`
-      const request = ${JSON.stringify({
-        method: request.method
-      })}
-      const body = ${JSON.stringify(data)}
-      ${sitemap[pathname]}`)
+      const {default: apiPut} = await import(`../../_app/${apiPath}/put.js`)
 
-      const _response = await func()
+
+      const _response = await apiPut(request,data)
 
       response = new Response(JSON.stringify(_response), {
         headers: {
@@ -183,7 +161,7 @@ const api_middleware =  async (sitemap, pathname, request) => {
     // TODO: Figire out who broke it 
     // return html page instead
     console.log(globalThis.errorObject)
-    return await html(sitemap, '/error')
+    return await html('/error')
 
 
     // response = Response.json({status:500, msg: 'api does not exist'},{

@@ -11,8 +11,7 @@ const html_middleware = async (pathname, req, path = _path) => {
   let paramPage = ''
   let jsxPage = false
   let page;
-
-  if(path !== "error"){
+ 
     for (const ext of exts) {
       let _pageSrc = `${path}/index.${ext}`
   
@@ -46,9 +45,7 @@ const html_middleware = async (pathname, req, path = _path) => {
     if(jsxPage){
       return jsxPage.default()
     }
-  }else{
-   return error_response()
-  }
+  
 
   
 
