@@ -1,7 +1,7 @@
 
 
 const webSocket_middleware = async (pathname,request) => {
-  if (request.headers.get("upgrade") === "websocket") {
+  if (request.headers.get("upgrade") === "websocket" && pathname === '/socket') {
     const { socket: ws, response } = Deno.upgradeWebSocket(request);
     
     const handleConnected = () => console.log("Connection established");

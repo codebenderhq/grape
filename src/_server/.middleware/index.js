@@ -37,7 +37,15 @@ const middleware = async (request, info) => {
       const isFileRequest = pathname.includes('.')
       const isScriptRequest = pathname.includes('.js')
 
-      
+      try{
+        const extensions = await import('../../../extensions.js')
+        extensions.run_extensions(pathname, request)
+      }catch{
+        console.log('no extension file')
+      }
+
+
+
       if(isScriptRequest){
       const path = pathname.split('.').shift()
  
