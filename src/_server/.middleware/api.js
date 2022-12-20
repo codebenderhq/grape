@@ -55,6 +55,7 @@ const api_middleware =  async (pathname, request) => {
   let response;
   try {
     let data ={};
+    const apiSrc = `${Deno.cwd()}/src/_app`
     const auth = request.headers.get("authorization");
     const referer = request.headers.get("referer");
     const paths = pathname.split('/')
@@ -76,47 +77,22 @@ const api_middleware =  async (pathname, request) => {
       data = await get_data(request) 
     }
 
+    const {default: apiMethod} = await import(`${Deno.cwd()}/src/_app/${apiPath}/${request.method.toLowerCase()}.js`)
+    const json = await apiMethod(request,data.result)
 
-    if (request.method === "GET") {
-   
-      const {default: apiGet} = await import(`../../_app/${apiPath}/get.js`)
-      const json = await apiGet(request)
- 
-      response = Response.json(json,{
-        status: json.status
-      });
-  
-    } else if (request.method === "POST") {
-       
-      const {default: apiPost} = await import(`../../_app/${apiPath}/post.js`)
+    if (data.result === 'form') {
 
-      const json = await apiPost(request,data.result)
- 
-
-      //CTA work in progress
-      if (data.result === 'form') {
-
-        let page = '/status'
-        // convert this to jsx for customizability
-        return await html('/status')
-      }
-
-      response = Response.json(json,{
-        status: json.status
-      });
-
-    } else if (request.method == "PUT") {
-      const {default: apiPut} = await import(`../../_app/${apiPath}/put.js`)
-
-      const _response = await apiPut(request,data)
-
-      response = new Response(JSON.stringify(_response), {
-        headers: {
-          "content-type": "application/json",
-        },
-        status: 200,
-      });
+      let page = '/status'
+      // convert this to jsx for customizability
+      return await html('/status')
     }
+
+
+    response = Response.json(json,{
+      status: json.status
+    });
+
+    
   } catch (err) {
     // log();
     globalThis.errorObject = {

@@ -3,8 +3,6 @@ import assets_middleware from './asset.js';
 import script_middleware from "./script.js";
 import api_middleware from "./api.js";
 
-
-
 // a rudimentary deomin specifier
 const set_domain = (request) => {
 
@@ -37,8 +35,8 @@ const middleware = async (request, info) => {
       const isFileRequest = pathname.includes('.')
       const isScriptRequest = pathname.includes('.js')
 
-      try{
-        const extensions = await import('../../../extensions.js')
+      try{ 
+        const extensions = await import(`${Deno.cwd()}/extensions.js`)
         extensions.run_extensions(pathname, request)
       }catch{
         console.log('no extension file')
