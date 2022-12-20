@@ -54,6 +54,7 @@ If you do not want to contrbute your extended version that is okay,
 
 ## roadmap
 [] env logger
+[] enable generating service and page together (grape)
 
 
 <!-- https://cli.github.com/ -->
