@@ -78,6 +78,8 @@ if (import.meta.main) {
     if(Deno.args.length > 0)
     {
       switch ( Deno.args[0]) {
+        case "tw":
+            await devServe()
         case "build":
             await prodServe()
             break;
@@ -91,7 +93,6 @@ if (import.meta.main) {
           break;
       }
     }else{
-        await devServe()
 
         // console.log(instances)
     }
