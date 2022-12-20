@@ -32,3 +32,11 @@ to install
 deno install
 
 deno task sdk will be for people who would like to import their packages beforehand by specifying it there without the npm
+
+## advanced
+
+To extend it for yourself and contribte you will need to fork this repository and 
+add a import path to be able to direct it cloned repo within your project to begin extending it to your needs
+
+if you would like to contribute your extended version just open a PR from your forked repo to the orignal repo
+If you do not want to contrbute your extended version that is okay,
