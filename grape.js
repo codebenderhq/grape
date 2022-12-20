@@ -104,23 +104,48 @@ const deno_task = async (arg) => {
     await cmdRun(deno_option,'')
 }
 
+// generate templates for quicker development 
+// will then edit the templates before generation to speed up development
 const generate = async (args) => {
 
+    let path;
+    let template_path = `${Deno.cwd()}/frame-starter/.frame/templates`
     const type = args[1]
     const name = args[2]
-    const other = args[3]
+    const instance = args[4]
+    const other = args[5]
 
 
+    // create page and service together
     if(type ==='page'){
-        console.log(`generating ${name} page`)
+        console.log(`generating ${name} page for ${instance} instance`)
+        path = `${Deno.cwd()}/src/_app/${instance}/pages`
+        Deno.mkdir(path,{ recursive: true })
+        await Deno.copyFile(`${template_path}/index.html`, `${path}/${name}.html`);
     }
 
     if(type === 'service'){
-        console.log(`generating ${name} service for the ${other ? other : 'index'} page`)
+        path = `${Deno.cwd()}/src/_app/${instance}/services`
+        Deno.mkdir(path,{ recursive: true })
+        console.log(`generating ${name} service for the ${instance} instance`)
+        await Deno.copyFile(`${template_path}/service.js`, `${path}/${name}.js`);
     }
+ 
+    const nameArray = name.split('/')
+    let subPath = '';
+    let _name = name;
+    if(nameArray.length > 1){
+        subPath = `/${nameArray[0]}`
+        _name = nameArray[1]
+
+    } 
 
     if(type === 'api'){
-        console.log(`generating ${name} api and ${other} method`)
+        path = `${Deno.cwd()}/src/_app/${instance}/api${subPath}`
+        console.log(path)
+        Deno.mkdir(path,{ recursive: true })
+        console.log(`generating ${name} api for the ${instance} instance`)
+        await Deno.copyFile(`${template_path}/api.js`, `${path}/${_name}.js`);
     }
 }
 

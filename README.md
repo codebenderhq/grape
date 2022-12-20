@@ -33,6 +33,17 @@ deno install
 
 deno task sdk will be for people who would like to import their packages beforehand by specifying it there without the npm
 
+### grape cli
+```create `type` `name` for `instance```
+
+page
+create page noah for sally
+
+service
+create service hollard  for sally
+
+api
+create api get  for sally
 ## advanced
 
 To extend it for yourself and contribte you will need to fork this repository and 
