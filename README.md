@@ -13,6 +13,10 @@ providing the flexibility needed to achieve our mission
 deno install -n grape https://github.com/codebenderhq/backpack/releases/latest/download/grape.js
 ```
 
+```
+grape new 'project_name'
+```
+
 You can use this starter template to playaround with it
 [backpack-frame](https://github.com/codebenderhq/backpack-frame)
 
