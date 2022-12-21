@@ -9,6 +9,9 @@ A collection of the worlds greatest hits bundled into a low code solution,
 providing the flexibility needed to achieve our mission
 
 ### Getting Started
+```
+deno install -n grape https://github.com/codebenderhq/backpack/releases/latest/download/grape.js
+```
 
 You can use this starter template to playaround with it
 [backpack-frame](https://github.com/codebenderhq/backpack-frame)
