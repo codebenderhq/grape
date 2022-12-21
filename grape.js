@@ -10,14 +10,15 @@ const cmdRun = async(command,msg) => {
 
     const {code} =  await p.status 
     // const rawOutput = await p.output();
-    const rawError = await p.stderrOutput();
-    console.log(msg)
+     const rawError = await p.stderrOutput();
+    // console.log(msg)
 
+    console.log(code)
     if (code === 0) {
         // await Deno.stdout.write(rawOutput);
     } else {
-        const errorString = new TextDecoder().decode(rawError);
-        console.log(errorString);
+        // const errorString = new TextDecoder().decode(rawError);
+        // console.log(errorString);
     }
 }
 const upgrade = async () => {
@@ -91,12 +92,14 @@ const prodServe = async () => {
 
 }
 
-const new_project = async () => {
-    const frame_installer = 'curl -sLO https://github.com/codebenderhq/backpack/releases/latest/download/binary.zip'
-    const unzip_installer = 'unzip binary.zip'
+const new_project = async (name) => {
+    const frame_installer = 'curl -sLO https://github.com/codebenderhq/backpack-frame/archive/refs/heads/main.zip'
+    const unzip_installer = `unzip -q main.zip`
+    const rename_zip = `mv backpack-frame-main ${name}`
 
     await cmdRun(frame_installer,'FRAME installed')
     await cmdRun(unzip_installer,'FRAME ready to be used')
+    await cmdRun(rename_zip,'FRAME ready to be used')
 }
 
 const deno_task = async (arg) => { 
@@ -157,7 +160,7 @@ if (import.meta.main) {
     {
       switch (args[0]) {
         case "new":
-            await new_project()
+            await new_project(args[1])
             break;
         case "create":
             await generate(args)

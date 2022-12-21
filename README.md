@@ -11,7 +11,7 @@ providing the flexibility needed to achieve our mission
 ### Getting Started
 
 You can use this starter template to playaround with it
-[backpack-starter](https://github.com/codebenderhq/backpack-starter)
+[backpack-frame](https://github.com/codebenderhq/backpack-frame)
 
 ### sauveur cloud
 
@@ -34,6 +34,7 @@ deno install
 deno task sdk will be for people who would like to import their packages beforehand by specifying it there without the npm
 
 ### grape cli
+Grape is an innovative CLI that helps you quickly connect your community with apps you created. It offers powerful tools to build your perfect app, plus features to easily create, manage, and deploy it. With Grape, building and sharing your app is easy. 
 ```create `type` `name` for `instance```
 
 page
