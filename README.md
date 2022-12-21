@@ -8,13 +8,20 @@ a modern day developer swiss knife, one that would help them build solutions to 
 A collection of the worlds greatest hits bundled into a low code solution,
 providing the flexibility needed to achieve our mission
 
-### Getting Started
+### Getting Started With A New Project
+install grape
 ```
 deno install -n grape https://github.com/codebenderhq/backpack/releases/latest/download/grape.js
 ```
-
+ 
+create a new project 
 ```
 grape new 'project_name'
+```
+
+start the development server
+```
+grape dev
 ```
 
 You can use this starter template to playaround with it
