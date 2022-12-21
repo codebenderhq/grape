@@ -5,10 +5,10 @@
  */
 
 
-const hello =  async (req) => {
+ const hello =  async (req, data) => {
 
     console.log(req.method)
-    return {status:200, msg: 'BAD'}
+    return {status:200, data}
 }
 
 export default hello

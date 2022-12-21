@@ -11,7 +11,7 @@ providing the flexibility needed to achieve our mission
 ### Getting Started
 
 You can use this starter template to playaround with it
-[backpack-starter](https://github.com/codebenderhq/backpack-starter)
+[backpack-frame](https://github.com/codebenderhq/backpack-frame)
 
 ### sauveur cloud
 
@@ -32,3 +32,30 @@ to install
 deno install
 
 deno task sdk will be for people who would like to import their packages beforehand by specifying it there without the npm
+
+### grape cli
+Grape is an innovative CLI that helps you quickly connect your community with apps you created. It offers powerful tools to build your perfect app, plus features to easily create, manage, and deploy it. With Grape, building and sharing your app is easy. 
+```create `type` `name` for `instance```
+
+page
+create page noah for sally
+
+service
+create service hollard  for sally
+
+api
+create api get  for sally
+## advanced
+
+To extend it for yourself and contribte you will need to fork this repository and 
+add a import path to be able to direct it cloned repo within your project to begin extending it to your needs
+
+if you would like to contribute your extended version just open a PR from your forked repo to the orignal repo
+If you do not want to contrbute your extended version that is okay,
+
+## roadmap
+[] env logger
+[] enable generating service and page together (grape)
+
+
+<!-- https://cli.github.com/ -->

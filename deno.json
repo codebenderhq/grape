@@ -1,12 +1,14 @@
 {
     "tasks": {
-        "dev": "deno task bundle & export LOCAL=./src/_server && export LOCAL_BUILD=. && deno run --watch -A ./backpack/index.js ",
-        "run": " export LOCAL=./src/_server && export LOCAL_BUILD=. && deno run --watch -A ./backpack/index.js build",
+        "dev-unsecure" : "deno run -A grape.js tw & export LOCAL=./src && deno run  -A --unsafely-ignore-certificate-errors --watch=./src/ ./frame-starter/index.js",
+        "dev" : "deno run -A grape.js tw & export LOCAL=./src && deno run  -A  --watch=./src/ ./frame-starter/index.js",
+        "run" : "deno run -A grape.js build & export LOCAL=./src && deno run  -A  --watch=./src/ index.js",
         "test": " deno task build && deno test ./qa --allow-run  --allow-net --allow-env --allow-read --import-map ./src/import_map.json ",
-        "bundle": "deno bundle --watch ./src/_server/index.js ./backpack/server.js && cd backpack && zip -r ../binary.zip .",
+        "bundle": "deno bundle --watch ./src/_server/index.js server.js ",
         "reload": "deno cache --import-map ./src/import_map.json --reload ./src/server/index.js",
         "init": "chmod +x style && ./style",
-        "setup": "curl -sLO https://github.com/codebenderhq/backpack/releases/download/0.0.4/binary.zip  && unzip binary.zip",
-        "compile": "cd backpack && zip -r ../binary.zip ."
+        "setup": "curl -sLO https://github.com/codebenderhq/backpack/releases/latest/download/binary.zip  && unzip binary.zip",
+        "compile": "cd frame-starter && zip -r ../binary.zip .",
+        "tag": "git tag -a"
     }
 }
