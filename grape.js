@@ -1,5 +1,5 @@
  
-const uri = 'https://sauveur.xyz/api/blacklabel/cli'
+const uri = 'https://github.com/codebenderhq/backpack/releases/latest/download/grape.js'
  
 const cmdRun = async(command,msg) => {
     const cmd = command.split(' ')
