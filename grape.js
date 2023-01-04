@@ -13,7 +13,7 @@ const cmdRun = async(command,msg) => {
      const rawError = await p.stderrOutput();
     // console.log(msg)
 
-    console.log(code)
+    console.log(msg)
     if (code === 0) {
         // await Deno.stdout.write(rawOutput);
     } else {
@@ -47,7 +47,7 @@ const tailwindInit = async () => {
 
 const tailwindRun = async (isBuild) => {
     console.log('generating styles')
-    const styleCMD = `./tailwindcss -i ./src/input.css -o ./src/assets/output.css  ${isBuild ? '--minify': '--watch' }`.split(' ')
+    const styleCMD = `./tailwindcss -i ./src/input.css -o ./src/public/output.css  ${isBuild ? '--minify': '--watch' }`.split(' ')
     const styleProcess = Deno.run({
         cmd:styleCMD,
         stdout: "piped",
@@ -100,11 +100,16 @@ const new_project = async (name) => {
     await cmdRun(frame_installer,'FRAME installed')
     await cmdRun(unzip_installer,'FRAME ready to be used')
     await cmdRun(rename_zip,'FRAME ready to be used')
+
+
+    // const srd_installer = 'curl -sLO https://github.com/codebenderhq/backpack-std/archive/refs/heads/main.zip'
+    // const unzip_std = `unzip -q main.zip`
+    // const rename_std = `mv backpack-frame-main ${name}`
 }
 
 const deno_task = async (arg) => { 
     const deno_option = `deno task ${arg}`
-    await cmdRun(deno_option,'')
+    await cmdRun(deno_option,'grape executed')
 }
 
 // generate templates for quicker development 
@@ -112,7 +117,7 @@ const deno_task = async (arg) => {
 const generate = async (args) => {
 
     let path;
-    let template_path = `${Deno.cwd()}/frame-starter/.frame/templates`
+    let template_path = `${Deno.cwd()}/std/.frame/templates`
     const type = args[1]
     const name = args[2]
     const instance = args[4]
