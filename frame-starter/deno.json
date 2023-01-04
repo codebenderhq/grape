@@ -1,8 +1,0 @@
-{
-    "tasks": {
-        "dev-unsecure" : "deno run -A grape.js tw & export LOCAL=./src && deno run  -A --unsafely-ignore-certificate-errors --watch=./src/ index.js",
-        "dev" : "deno run -A grape.js tw & export LOCAL=./src && deno run  -A  --watch=./src/ index.js",
-        "run" : "deno run -A grape.js build & export LOCAL=./src && deno run  -A  --watch=./src/ index.js",
-        "init": "chmod +x style && ./style"
-    }
-}
